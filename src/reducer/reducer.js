@@ -1,10 +1,10 @@
-import { ADD_UPGRADE } from "../actions/actions";
+import { ADD_UPGRADE, REMOVE_UPGRADE } from "../actions/actions";
 
 export const initialState = {
   additionalPrice: 0,
   car: {
-    price: 26395,
-    name: "2019 Ford Mustang",
+    price: '2,999',
+    name: "2002 Honda Accord",
     image:
       "https://cdn.motor1.com/images/mgl/0AN2V/s1/2019-ford-mustang-bullitt.jpg",
     features: [],
@@ -25,6 +25,11 @@ export const initialState = {
 
 
 export const reducer = (state = initialState, action) => {
+  // for(let each in state.additionalFeatures){
+  //   if
+  //   console.log(state.additionalFeatures[each])
+  // }
+  console.log(action.payload)
   switch (action.type) {
     case ADD_UPGRADE:
       const shallowCopyOfCarProperty = { ...state.car };
@@ -36,6 +41,17 @@ export const reducer = (state = initialState, action) => {
         ...state,
         car: shallowCopyOfCarProperty,
       };
+    case REMOVE_UPGRADE:
+      const shallowCopyOfCarPropertyForRemoval = { ...state.car };
+      shallowCopyOfCarPropertyForRemoval.features = [
+        ...shallowCopyOfCarPropertyForRemoval.features,
+        action.payload,
+      ];
+      return {
+        ...state,
+        car: shallowCopyOfCarPropertyForRemoval,
+      };
+
     default:
       return state;
   }

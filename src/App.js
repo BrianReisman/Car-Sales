@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addItem } from "./actions/actions";
+import { addItem, removeItem } from "./actions/actions";
 
 import Header from "./components/Header";
 import AddedFeatures from "./components/AddedFeatures";
@@ -12,15 +12,15 @@ const App = (props) => {
   return (
     <div className="boxes">
       <div className="box">
-        {/* <Header car={state.car} />
-        <AddedFeatures car={state.car} dispatch={dispatch} />
+        <Header car={props.car} />
+        <AddedFeatures car={props.car} dispatch={props.addItem} />
       </div>
       <div className="box">
         <AdditionalFeatures
-          additionalFeatures={state.additionalFeatures}
-          dispatch={dispatch}
+          additionalFeatures={props.additionalFeatures}
+          dispatch={props.removeItem}
         />
-        <Total car={state.car} additionalPrice={state.additionalPrice} /> */}
+        <Total car={props.car} additionalPrice={props.additionalPrice} />
       </div>
     </div>
   );
@@ -29,19 +29,19 @@ const App = (props) => {
 //! Who is calling this function??
 //!What is being passed in?
 const mapStateToProps = (state) => {
-  console.log(state)
+  // console.log(state)
   return {
-    carState: state,
-    test: 'who called me???'
+    car: state.car,
+    additionalFeatures: state.additionalFeatures,
+    additionalPrice: state.additionalPrice,
+    // test: 'who called me???'
   };
 };
 
-// const mapDispatchToProps = { addItem };
+const mapDispatchToProps = { addItem, removeItem };
 
-//*I want to grant <App/> access to state + actions. 
-export default connect(mapStateToProps, { addItem })(App);
-
+//*I want to grant <App/> access to state + actions.
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 //Turning state to props
 // connect('bespoke, state shape', '{action factories, weWillUse}')('IN THIS COMPONENT')
-
