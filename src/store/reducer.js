@@ -18,21 +18,39 @@ const initState = {
 };
 
 export const reducer = (state = initState, action) => {
-  console.log("action type:", action.type);
-  console.log("action payload:", action.payload);
+  // console.log("action type:", action.type);
+  // console.log("action payload:", action.payload);
 
   switch (action.type) {
     case actionTypes.ADD_FEATURE:
       return {
         ...state,
+        additionalPrice: state.additionalPrice + action.payload.price,
         car: {
           ...state.car,
-          // features: [state.car.features.concat(action.payload)]
-          features: [...state.car.features, action.payload]
+          features: [...state.car.features, action.payload], //*
         },
-        additionalFeatures: state.additionalFeatures.filter(feat => feat.id !== action.payload.id)
+        additionalFeatures: [
+          ...state.additionalFeatures.filter(
+            (feat) => feat.id !== action.payload.id
+          ),
+        ],
       };
+
     case actionTypes.REMOVE_FEATURE:
+      return {
+        ...state,
+        additionalPrice: state.additionalPrice - action.payload.price,
+        additionalFeatures: [...state.additionalFeatures, action.payload],
+        car: {
+          ...state.car,
+          features: [...state.car.features.filter(
+            feat => feat.id !== action.payload.id
+            )
+          ]
+        }
+      };
+
     default:
       return state;
   }

@@ -8,8 +8,6 @@ import Total from './components/Total';
 import {addFeature} from './store/actions';
 
 const App = (props) => {
-  console.log(props)
-
   return (
     <div className="boxes">
       <div className="box">
